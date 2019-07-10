@@ -1,18 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import {menu} from 'semantic-ui-react'
+import MenuBar from './components/MenuBar';
+
+const handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div class="ui menu">
-          <a class="active item">Editorials</a>
-          <a class="item">Reviews</a>
-          <a class="item">Upcoming Events</a>
-        </div>
-      </header>
-    </div>
+    <MenuBar />
   );
 }
 
