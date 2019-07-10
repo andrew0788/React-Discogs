@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import MenuBar from './components/MenuBar';
+import MenuBar from '../../components/MenuBar';
 
-const handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+
+const handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
 
 function App() {
