@@ -7,14 +7,11 @@ import userService from '../../utils/userService';
 class SignupForm extends Component {
 
   state = {
-    name: '',
     email: '',
     password: '',
-    passwordConf: ''
   };
 
   handleChange = (e) => {
-    this.props.updateMessage('');
     this.setState({
       // Using ES2015 Computed Property Names
       [e.target.name]: e.target.value
@@ -24,14 +21,14 @@ class SignupForm extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await userService.signup(this.state);
+      await userService.login(this.state);
       // Let <App> know a user has signed up!
       this.props.handleSignupOrLogin();
       // Successfully signed up - show GamePage
       this.props.history.push('/');
     } catch (err) {
-      // Invalid user data (probably duplicate email)
-      this.props.updateMessage(err.message);
+      // Use a modal or toast in your apps instead of alert
+      alert('Invalid Credentials!');
     }
   }
 
@@ -45,13 +42,6 @@ class SignupForm extends Component {
         <Form onSubmit={this.handleSubmit} >
           <Form.Group>
           <Form.Input
-            label='Name'
-            placeholder='Name'
-            name='name'
-            value={this.props.name}
-            onChange={this.handleChange}
-          />
-          <Form.Input
             label='Email'
             placeholder='Email'
             name='email'
@@ -63,13 +53,6 @@ class SignupForm extends Component {
             placeholder='Password'
             name='password'
             value={this.props.password}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            label='Password Confirm'
-            placeholder='Password'
-            name='password'
-            value={this.props.passwordConf}
             onChange={this.handleChange}
           />
         <Form.Button content="Submit" />

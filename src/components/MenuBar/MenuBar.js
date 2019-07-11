@@ -3,8 +3,6 @@ import React from 'react'
 import {Menu} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 
-import SignUpPage from '../../pages/SignUpPage/SignUpPage'
-
 
 class MenuBar extends React.Component {
   render () {
@@ -18,7 +16,7 @@ class MenuBar extends React.Component {
           active={activeItem === 'about'}
           onClick={this.handleItemClick}
           />
-        <Menu.Item as={Link} to='/users/login'
+        <Menu.Item as={Link} to='/login'
           name='Log In'
           active={activeItem === 'logIn'}
           onClick={this.handleItemClick}
