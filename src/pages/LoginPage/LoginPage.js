@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Form } from 'semantic-ui-react';
+import { Form, Grid } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import userService from '../../utils/userService';
 
 
-class SignupForm extends Component {
+class LoginPage extends Component {
 
   state = {
     email: '',
@@ -39,28 +39,32 @@ class SignupForm extends Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.handleSubmit} >
-          <Form.Group>
-          <Form.Input
-            label='Email'
-            placeholder='Email'
-            name='email'
-            value={this.props.email}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            label='Password'
-            placeholder='Password'
-            name='password'
-            value={this.props.password}
-            onChange={this.handleChange}
-          />
-        <Form.Button content="Submit" />
-        </Form.Group>
-        </Form>
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+          <Grid.Column style={{ maxWidth: 450 }}>
+              <Form onSubmit={this.handleSubmit} >
+                <Form.Group>
+                <Form.Input
+                  label='Email'
+                  placeholder='Email'
+                  name='email'
+                  value={this.props.email}
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  label='Password'
+                  placeholder='Password'
+                  name='password'
+                  value={this.props.password}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Button content="Submit" />
+              </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
 }
 
-export default SignupForm;
+export default LoginPage;

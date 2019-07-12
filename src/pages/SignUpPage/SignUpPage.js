@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import { Grid } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
+
+
+const style ={
+  textAlign: 'center',
+  padding: '15em 50em',
+}
 
 class SignUpPage extends Component {
   constructor(props){
@@ -13,10 +21,10 @@ class SignUpPage extends Component {
 
   render () {
     return(
-      <div>
-        <SignUpForm {...this.props} updateMessage={this.updateMessage} />
-        <p>{this.state.message}</p>
-      </div>
+        <Grid columns={2} style={style} verticalAlign='center'>
+          <SignUpForm {...this.props} updateMessage={this.updateMessage} />
+        </Grid >
+        // <p>{this.state.message}</p>
     );
   }
 }

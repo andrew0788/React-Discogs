@@ -9,7 +9,6 @@ module.exports = {
 };
 
 async function signup(req, res) {
-  console.log('hit');
   const user = new User(req.body);
   try {
     await user.save();
@@ -22,15 +21,16 @@ async function signup(req, res) {
 }
 
 async function login(req, res) {
+  console.log(req.body);
   try {
     const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(401).json({err: 'bad credentials'});
-    user.comparePassword(req.body.pw, (err, isMatch) => {
+    if (!user) return res.status(401).json({err: 'wrong email'});
+    user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch) {
         const token = createJWT(user);
         res.json({token});
       } else {
-        return res.status(401).json({err: 'bad credentials'});
+        return res.status(401).json({err: 'something else'});
       }
     });
   } catch (err) {

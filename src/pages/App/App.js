@@ -4,10 +4,10 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
 import MenuBar from '../../components/MenuBar/MenuBar';
+import Dash from '../Dash/Dash'
 import SignUpPage from '../SignUpPage/SignUpPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utils/userService';
-
 
 // const handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
@@ -26,15 +26,28 @@ class App extends Component {
     this.setState({user: userService.getUser()});
   }
 
+  handleLogout = () => {
+    console.log('hit');
+    userService.logout();
+    this.setState({ user: null });
+  }
 
   render(){
     return(
       <div>
         <header>
-          <MenuBar />
+          <MenuBar
+            handleLogout={this.handleLogout}
+          />
         </header>
 
         <Switch>
+          <Route exact path='/' render={() =>
+            <Dash
+              user={this.state.user}
+              handleLogout={this.handleLogout}
+            />
+          }/>
           <Route exact path='/signup' render={({ history }) =>
             <SignUpPage
               history={history}
