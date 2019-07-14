@@ -5,37 +5,47 @@ import {Link} from 'react-router-dom';
 
 
 
-class MenuBar extends React.Component {
-  render () {
-    let activeItem = this.state
-    return  (
+const MenuBar = (props) => {
+  let nav = props.user ?
+    <Menu>
+      <Menu.Item as={Link} to="/" header><img alt="NDL Logo" src='/record-logo-96.png' /></Menu.Item>
+      <Menu.Item as={Link} to ='/'
+        name='Your Collection'
+        active={props.activeItem === "collection"}
+        onClick={props.handleItemClick}
+      />
+      <Menu.Item as={Link} to=''
+        name='Log Out'
+        active={props.activeItem === 'logOut'}
+        onClick={props.handleLogout}
+        />
+    </Menu>
+    :
+    <Menu>
+      <Menu.Item as={Link} to="/" header><img alt="NDL Logo" src='/record-logo-96.png' /></Menu.Item>
+      <Menu.Item as={Link} to='/login'
+        name='Log In'
+        active={props.activeItem === 'logIn'}
+        onClick={props.handleItemClick}
+      />
+      <Menu.Item as={Link} to='/signup'
+        name='Sign Up'
+        active={props.activeItem === 'signUp'}
+        onClick={props.handleItemClick}
+      />
+
+      <Menu.Item as={Link} to='/about'
+        name='About'
+        active={props.activeItem === 'about'}
+        onClick={props.handleItemClick}
+      />
+  </Menu>;
+
+  return(
     <div>
-      <Menu>
-        <Menu.Item as={Link} to="/" header><img alt="NDL Logo" src='/record-logo-96.png' /></Menu.Item>
-        <Menu.Item as={Link} to='/about'
-          name='About'
-          active={activeItem === 'about'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item as={Link} to='/login'
-          name='Log In'
-          active={activeItem === 'logIn'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item as={Link} to='/signup'
-          name='Sign Up'
-          active={activeItem === 'signUp'}
-          onClick={this.handleItemClick}
-          />
-        <Menu.Item as={Link} to=''
-          name='Log Out'
-          active={activeItem === 'logOut'}
-          onClick={this.props.handleLogout}
-          />
-      </Menu>
+      {nav}
     </div>
-    )
-  }
+  )
 }
 
 export default MenuBar;
