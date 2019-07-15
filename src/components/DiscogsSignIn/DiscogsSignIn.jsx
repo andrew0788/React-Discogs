@@ -1,16 +1,14 @@
 import React, {Component, useEffect, useState} from 'react'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import discogsService from '../../utils/discogsService'
 
-
-class DiscogsSignIn extends Component {
-  componentDidMount() {
-  // Update the document title using the browser API
-  document.title = `You clicked times`;
-  };
+class DiscogsSignIn extends React.Component {
 
   render(){
     return(
-      <Header>Log In</Header>
+      <Modal.Content>
+        <Header>Log In</Header>
+      </Modal.Content>
     )
   }
 }

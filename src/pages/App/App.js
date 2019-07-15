@@ -3,31 +3,47 @@ import { Switch, Route } from 'react-router-dom'
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
+
 import MenuBar from '../../components/MenuBar/MenuBar';
+import DiscogsSignIn from '../../components/DiscogsSignIn/DiscogsSignIn'
 import Dash from '../Dash/Dash'
 import SignUpPage from '../SignUpPage/SignUpPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utils/userService';
 
-// const handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      user: userService.getUser()
+      user: userService.getUser(),
+      activeItem: ''
     };
   }
-
-
+  //
+  // logInOrDash = () => {
+  //   let user = this.state.user;
+  //   user ?
+  //     return(
+  //       <Dash
+  //         user={this.state.user}
+  //         handleLogout={this.handleLogout}
+  //       />
+  //   );
+  //   :
+  //     <SignUpPage
+  //       history={history}
+  //       handleSignupOrLogin={this.handleSignupOrLogin}
+  //     />;
+  // }
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleSignupOrLogin = () => {
     this.setState({user: userService.getUser()});
   }
 
   handleLogout = () => {
-    console.log('hit');
     userService.logout();
     this.setState({ user: null });
   }
@@ -38,12 +54,15 @@ class App extends Component {
         <header>
           <MenuBar
             handleLogout={this.handleLogout}
+            user={this.state.user}
+            activeItem={this.state.activeItem}
           />
         </header>
 
         <Switch>
-          <Route exact path='/' render={() =>
+          <Route exact path='/' render={({ history }) =>
             <Dash
+              history={history}
               user={this.state.user}
               handleLogout={this.handleLogout}
             />

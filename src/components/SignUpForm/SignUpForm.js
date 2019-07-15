@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Grid } from 'semantic-ui-react';
+import { Form, Grid, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import userService from '../../utils/userService';
 
@@ -42,41 +42,48 @@ class SignupForm extends Component {
   render() {
     return (
       <div>
-          <Form onSubmit={this.handleSubmit} >
-            <Grid.Column>
-            <Form.Input
-              label='Name'
-              placeholder='Name'
-              name='name'
-              value={this.props.name}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              label='Email'
-              placeholder='Email'
-              name='email'
-              value={this.props.email}
-              onChange={this.handleChange}
-            />
-        </Grid.Column>
         <Grid.Column>
-            <Form.Input
-              label='Password'
-              placeholder='Password'
-              name='password'
-              value={this.props.password}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              label='Password Confirm'
-              placeholder='Password'
-              name='password'
-              value={this.props.passwordConf}
-              onChange={this.handleChange}
-            />
-            <Form.Button content="Submit" />
-          </Grid.Column>
-        </Form>
+          <Form onSubmit={this.handleSubmit} >
+            <Header as='h1'>
+              Sign Up
+            </Header>
+            <Form.Group>
+              <Form.Input
+                label='Name'
+                placeholder='Name'
+                name='name'
+                value={this.props.name}
+                onChange={this.handleChange}
+              />
+            </ Form.Group>
+            <Form.Group>
+              <Form.Input
+                label='Email'
+                placeholder='Email'
+                name='email'
+                value={this.props.email}
+                onChange={this.handleChange}
+              />
+              </Form.Group>
+            <Form.Group>
+              <Form.Input
+                label='Password'
+                placeholder='Password'
+                name='password'
+                value={this.props.password}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+              <Form.Input
+                label='Password Confirm'
+                placeholder='Password'
+                name='password'
+                value={this.props.passwordConf}
+                onChange={this.handleChange}
+              />
+              <Form.Button content="Submit" />
+          </Form>
+        </Grid.Column>
       </div>
     );
   }
