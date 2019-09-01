@@ -1,24 +1,19 @@
 import React from 'react'
-import {Button, Modal} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
-
-import discogsService from '../../utils/discogsService';
 
 import RecordCollection from '../../components/RecordCollection/RecordCollection';
 import LogInOrSignUp from '../LogInOrSignUp/LogInOrSignUp';
-import DiscogsSignIn from '../../components/DiscogsSignIn/DiscogsSignIn';
+import ConnectDiscogs from '../ConnectDiscogs/ConnectDiscogs';
+
 
 class Dash extends React.Component {
 
 
-  handleModel = async()=>{
-    try{
-      await discogsService.getDiscogsSignIn(this.state);
-      this.props.history.push('/');
-    } catch (err){
-      console.log(err);
-    }
+  updateMessage= (msg) => {
+    this.setState({message: msg})
   }
+
+
+  handleClick = (e) => e.preventDefault();
 
   render () {
     const user = this.props.user;
@@ -28,15 +23,12 @@ class Dash extends React.Component {
         ?
           <RecordCollection />
         :
-        <Modal
-          trigger={<Button>Connect To Discogs</Button>}
-          onMount={this.handleModel} centered={true}
-        >
-          <DiscogsSignIn
-            history={this.props.history}
-            model={this.props}
-            />
-        </Modal>
+          <ConnectDiscogs
+            {...this.props}
+            updateMessage={this.updateMessage}
+            handleClick={this.props.getDiscogsUser}
+            discogsUserName={this.props.discogsUserName}
+          />
       )
     } else {
       return(

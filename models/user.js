@@ -1,12 +1,14 @@
+const Record = require('./record');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const SALT_ROUNDS = 6;
 
 const userSchema = new mongoose.Schema({
-  name: String,
+  name: {type: String, unique: true},
   email: {type: String, required: true, lowercase: true, unique: true},
-  password: String
+  password: String,
+  recordCollection: [{record: mongoose.Schema.Types.ObjectId}]
 }, {
   timestamps: true
 });

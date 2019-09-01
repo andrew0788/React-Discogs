@@ -47,7 +47,6 @@ class SignupForm extends Component {
             <Header as='h1'>
               Sign Up
             </Header>
-            <Form.Group>
               <Form.Input
                 label='Name'
                 placeholder='Name'
@@ -55,8 +54,6 @@ class SignupForm extends Component {
                 value={this.props.name}
                 onChange={this.handleChange}
               />
-            </ Form.Group>
-            <Form.Group>
               <Form.Input
                 label='Email'
                 placeholder='Email'
@@ -64,8 +61,6 @@ class SignupForm extends Component {
                 value={this.props.email}
                 onChange={this.handleChange}
               />
-              </Form.Group>
-            <Form.Group>
               <Form.Input
                 label='Password'
                 placeholder='Password'
@@ -73,7 +68,6 @@ class SignupForm extends Component {
                 value={this.props.password}
                 onChange={this.handleChange}
               />
-            </Form.Group>
               <Form.Input
                 label='Password Confirm'
                 placeholder='Password'

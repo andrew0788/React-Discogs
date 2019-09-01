@@ -5,7 +5,6 @@ import 'semantic-ui-css/semantic.min.css';
 
 
 import MenuBar from '../../components/MenuBar/MenuBar';
-import DiscogsSignIn from '../../components/DiscogsSignIn/DiscogsSignIn'
 import Dash from '../Dash/Dash'
 import SignUpPage from '../SignUpPage/SignUpPage';
 import LoginPage from '../LoginPage/LoginPage';
