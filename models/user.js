@@ -5,10 +5,11 @@ const bcrypt = require('bcryptjs');
 const SALT_ROUNDS = 6;
 
 const userSchema = new mongoose.Schema({
+  // discogs user name
   name: {type: String, unique: true},
   email: {type: String, required: true, lowercase: true, unique: true},
   password: String,
-  recordCollection: [{record: mongoose.Schema.Types.ObjectId}]
+  recordCollection: [{type: mongoose.Schema.Types.ObjectId, ref: Record}]
 }, {
   timestamps: true
 });

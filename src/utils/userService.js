@@ -9,16 +9,17 @@ function signup(user) {
     body: JSON.stringify(user)
   })
   .then((res, err) => {
-    if (res.ok) return res.json();
+    if (res.ok) {
+      return res.json();
+    }
     // Probably a duplicate email
-    console.log(res);
+    console.log(res.body.token);
     throw new Error();
   })
   // Parameter destructuring!
   .then(({token}) => tokenService.setToken(token));
   // The above could have been written as
   //.then((token) => token.token);
-
 }
 
 
@@ -38,7 +39,10 @@ function login(creds) {
   })
   .then(res => {
     // Valid login if we have a status of 2xx (res.ok)
-    if (res.ok) return res.json();
+    if (res.ok) {
+      console.log(res);
+      return res.json();
+    }
     throw new Error('Bad Credentials!');
   })
   .then(({token}) => tokenService.setToken(token));

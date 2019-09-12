@@ -10,65 +10,64 @@ const mongoose = require('mongoose');
 
 
 module.exports={
-  getDiscogsRequestToken,
-  getDiscogsAccessToken,
-  respondToLogin,
   getAlbums
 }
 
-async function respondToLogin(req, res){
-  let discogsUser = req.body.discogsUser;
-  try{
-    const records = await getAlbums(discogsUser)
-    console.log(records);
-  }catch(err){
-    console.log(err);
+
+async function getAlbums(user, res){
+  let col = new Discogs({
+    consumerKey: process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_KEY,
+    consumerSecret: process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_SECRET
+  }).user().collection();
+  col.getReleases(user.name, 0, {page: 1, per_page: 75})
+    .then(collection => checkRecords(collection, user))
+    .catch(err => console.log(err))
+}
+
+
+function checkRecords(collection, user){
+  console.log(collection);
+  //Check to see if the user's collection is already complete
+  if (user.recordCollection.length === collection.pagination.items){
+    console.log('All records already in user\'s collection');
+  } else{
+    collection.releases.forEach(record => {
+      //Check if record is already in the user's collection
+      if (user.recordCollection.includes(record.basic_information.master_id)){
+        console.log('Record is in user\'s collection');
+      } else{
+        saveRecord(record, user)
+      }
+    })
   }
 }
 
-async function getAlbums(req, res){
-  let col = new Discogs().user().collection();
-  let results= [];
-  col.getReleases(req.name, 0, {page: 1, per_page: 10000})
-    .then(data => console.log(data))
-      .catch(err => console.log(err))
+
+async function saveRecord(record, user){
+  let newRecord = await createRecord(record);
+  //newRecord.save()
+  user.recordCollection.push(newRecord)
+  //user.save()
 }
 
-function getDiscogsRequestToken(req, res){
-  console.log(req.body);
-  oAuth.getRequestToken(
-    process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_KEY,
-    process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_SECRET,
-    'http://localhost:3001/api/discogs/callback',
-    function(err, requestData){
-      loginURL= requestData.authorizeUrl
-      res.json(loginURL)
-    }
-  )
+
+async function createRecord(record){
+  let newRecord = new Record();
+  newRecord.masterID = record.basic_information.master_id;
+  newRecord.title = record.basic_information.title;
+  let completeRecord = await getRecordData(newRecord)
+  return completeRecord
 }
 
-function getDiscogsAccessToken(req, res){
-  console.log('Get access');
-  oAuth.getAccessToken(
-    req.query.oauth_verifier,
-    function(err, accessData){
-      console.log(accessData);
-      res.send('access data')
-    }
-  )
+function getRecordData(record) {
+  let db = new Discogs().database();
+  db.getMaster(record.masterID, (err, data) => {
+    record = data;
+    console.log(record);
+  })
+  .then((err, data) => {return data})
 }
 
-function saveRecords(records, user){
-  console.log(user);
-  records.releases.forEach(instance => {
-    let recordInfo = instance.basic_information;
-      let newRecord = new Record();
-      newRecord.masterID = recordInfo.master_id;
-      newRecord.title = recordInfo.title;
-      newRecord.year  = recordInfo.year;
-      newRecord.artist = recordInfo.artists[0].name;
-    })
-}
 
 function createJWT(payload) {
   return jwt.sign(
@@ -77,3 +76,28 @@ function createJWT(payload) {
     {expiresIn: '15m'}
   );
 }
+//
+
+// function getDiscogsRequestToken(req, res){
+//   console.log(req.body);
+//   oAuth.getRequestToken(
+//     process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_KEY,
+//     process.env.REACT_APP_DISCOGS_OAUTH_CONSUMER_SECRET,
+//     'http://localhost:3001/api/discogs/callback',
+//     function(err, requestData){
+//       loginURL= requestData.authorizeUrl
+//       res.json(loginURL)
+//     }
+//   )
+// }
+//
+// function getDiscogsAccessToken(req, res){
+//   console.log('Get access');
+//   oAuth.getAccessToken(
+//     req.query.oauth_verifier,
+//     function(err, accessData){
+//       console.log(accessData);
+//       res.send('access data')
+//     }
+//   )
+// }
