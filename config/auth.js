@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
-module.exports = function(req, res, next) {
+const auth = function(req, res, next) {
   // Check for the token being sent in three different ways
   let token = req.get('Authorization') || req.query.token || req.body.token;
   if (token) {
@@ -21,3 +21,6 @@ module.exports = function(req, res, next) {
     next();
   }
 };
+
+
+export { auth };

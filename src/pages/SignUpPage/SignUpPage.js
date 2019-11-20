@@ -6,7 +6,8 @@ import 'semantic-ui-css/semantic.min.css';
 
 const style ={
   textAlign: 'center',
-  padding: '15em 50em',
+  height: '120vh',
+  margin: '10em 15em'
 }
 
 class SignUpPage extends Component {
@@ -21,10 +22,14 @@ class SignUpPage extends Component {
 
   render () {
     return(
-        <Grid columns={2} style={style} verticalAlign='center'>
+      <div >
+        <Grid style={style} verticalAlign='middle'>
+          <Grid.Column style={style}>
           <SignUpForm {...this.props} updateMessage={this.updateMessage} />
+          <p>{this.state.message}</p>
+          </Grid.Column>
         </Grid >
-        // <p>{this.state.message}</p>
+      </div>
     );
   }
 }
